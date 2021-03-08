@@ -3,6 +3,7 @@ import {
   MathUtils,
   Mesh,
   MeshStandardMaterial,
+  BackSide,
   TextureLoader,
 } from 'https://unpkg.com/three@0.117.0/build/three.module.js';
 
@@ -32,18 +33,24 @@ function createMaterial() {
   );
   // create a "standard" material using
   // the texture we just loaded as a color map
-  materialArray.push( new MeshStandardMaterial({ map: texture_bk }));
   materialArray.push( new MeshStandardMaterial({ map: texture_ft }));
+  materialArray.push( new MeshStandardMaterial({ map: texture_bk }));
   materialArray.push( new MeshStandardMaterial({ map: texture_up }));
   materialArray.push( new MeshStandardMaterial({ map: texture_dn }));
   materialArray.push( new MeshStandardMaterial({ map: texture_rt }));
   materialArray.push( new MeshStandardMaterial({ map: texture_lf }));
 
+  for (let i = 0; i < 6; i++)
+    materialArray[i].side = BackSide;
+
+  console.log(materialArray)
   return materialArray;
 }
 
+
+
 function createCube() {
-  let geometry = new BoxBufferGeometry(10, 10, 10);
+  let geometry = new BoxBufferGeometry(100, 100, 100);
   let material = createMaterial();
   let cube = new Mesh(geometry, material);
 
